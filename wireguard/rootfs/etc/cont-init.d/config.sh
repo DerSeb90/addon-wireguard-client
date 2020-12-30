@@ -101,9 +101,7 @@ fi
 
 # Check if pre_shared key value and if true get the peer pre_shared key
 pre_shared_key=""
-if ! bashio::config.has_value 'peer.pre_shared_key'; then
-    bashio::exit.nok 'You need a pre_shared_key configured for the peer'
-else
+if bashio::config.has_value 'peer.pre_shared_key'; then
     pre_shared_key=$(bashio::config 'peer.pre_shared_key')
 fi
 
