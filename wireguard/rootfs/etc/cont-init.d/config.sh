@@ -80,7 +80,7 @@ fi
 
 # Post up & down
 echo "PostUp = ${post_up}" >> "${config}"
-#echo "PostDown = ${post_down}" >> "${config}"
+echo "PostDown = ${post_down}" >> "${config}"
 
 # Status API Storage
 if ! bashio::fs.directory_exists '/var/lib/wireguard'; then
@@ -137,11 +137,10 @@ allowed_ips=$(IFS=", "; echo "${list[*]}")
 
 # Start writing peer information in client config
 {
-    echo "PostUp = iptables -t nat -A POSTROUTING -o wg0 -j MASQUERADE"
-    echo "PostDown = iptables -t nat -D POSTROUTING -o wg0 -j MASQUERADE"
     echo ""
     echo "[Peer]"
     echo "PublicKey = ${peer_public_key}"
+    echo "PreSharedKey = ${pre_shared_key}"
     echo "Endpoint = ${endpoint}"
     echo "AllowedIPs = ${allowed_ips}"
     echo "PersistentKeepalive = ${keep_alive}"
