@@ -23,7 +23,7 @@ if ! bashio::fs.directory_exists '/ssl/wireguard'; then
 fi
 
 # Get interface and config file location
-interface="wg1"
+interface="wg0"
 
 config="/etc/wireguard/${interface}.conf"
 
@@ -64,8 +64,8 @@ dns=$(IFS=", "; echo "${listDns[*]}")
 echo "DNS = ${dns}" >> "${config}"
 
 # Post Up & Down defaults
-post_up="iptables -t nat -A POSTROUTING -o wg1 -j MASQUERADE"
-post_down="iptables -t nat -D POSTROUTING -o wg1 -j MASQUERADE"
+post_up="iptables -t nat -A POSTROUTING -o wg0 -j MASQUERADE"
+post_down="iptables -t nat -D POSTROUTING -o wg0 -j MASQUERADE"
 if [[ $(</proc/sys/net/ipv4/ip_forward) -eq 0 ]]; then
     bashio::log.warning
     bashio::log.warning "IP forwarding is disabled on the host system!"
@@ -137,10 +137,11 @@ allowed_ips=$(IFS=", "; echo "${list[*]}")
 
 # Start writing peer information in client config
 {
+    echo "PostUp = iptables -t nat -A POSTROUTING -o wg0 -j MASQUERADE"
+    echo "PostDown = iptables -t nat -D POSTROUTING -o wg0 -j MASQUERADE"
     echo ""
     echo "[Peer]"
     echo "PublicKey = ${peer_public_key}"
-    #echo "PreSharedKey = ${pre_shared_key}"
     echo "Endpoint = ${endpoint}"
     echo "AllowedIPs = ${allowed_ips}"
     echo "PersistentKeepalive = ${keep_alive}"

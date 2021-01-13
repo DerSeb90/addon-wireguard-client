@@ -14,7 +14,7 @@ bashio::log.info "Starting WireGuard Client..."
 export WG_I_PREFER_BUGGY_USERSPACE_TO_POLISHED_KMOD=1
 
 # Get the interface
-interface="wg1"
+interface="wg0"
 
 # Run the WireGuard
 exec wg-quick up "${interface}"
