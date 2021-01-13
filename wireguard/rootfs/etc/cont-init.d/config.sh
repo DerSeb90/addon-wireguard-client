@@ -61,7 +61,7 @@ else
     bashio::exit.nok 'You need a dns configured'
 fi
 dns=$(IFS=", "; echo "${listDns[*]}")
-echo "DNS = ${dns}" >> "${config}"
+#echo "DNS = ${dns}" >> "${config}"
 
 # Post Up & Down defaults
 post_up="iptables -t nat -A POSTROUTING -o wg0 -j MASQUERADE"
