@@ -1,6 +1,6 @@
 {
    "name":"WireGuard Client",
-   "version":"0.0.3-SNAPSHOT",
+   "version":"0.0.4-SNAPSHOT",
    "slug":"wireguard_client",
    "description":"Fast, modern, secure VPN tunnel (client)",
    "url":"https://github.com/jjcarrion/addon-wireguard-client",
